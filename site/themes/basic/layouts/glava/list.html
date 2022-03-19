@@ -1,0 +1,42 @@
+{{ partial "header.html" . }}
+<body
+  lang="{{ .Site.LanguageCode }}"
+  class="sans-serif w-90 w-80-m w-60-ns center mv2 mv5-ns"
+  itemscope
+>
+
+  <span class="b">/ </span>
+  <a
+    href="{{ .Site.BaseURL  }}"
+    class="b bw1 bb pb1 no-underline black"
+    >{{ .Site.Title  }}</a
+  >
+  <span class="b"> / </span>
+  <a href="../" 
+     class="b bb bw1 pb1 no-underline black"
+     >{{ .Parent.Title }}</a>
+  
+  <section id="main" class="mt5">
+    <h1 itemprop="name" id="title">{{ .Title }}</h1>
+    <div>
+      <ul id="list" class="pl0">
+        <!-- prettier-ignore -->
+        {{ range .Data.Pages.GroupByParam "number" }}
+        {{range sort .Pages "Params.number"}}
+        <li class="list pl0 lh-copy">
+          <a
+            class="f3 b dib black no-underline"
+            href="{{ .Permalink}}"
+            >{{ .Title }}</a
+          >
+        </li>
+        <!-- prettier-ignore -->
+        {{ end }}
+        {{end}}
+      </ul>
+    </div>
+  </section>
+
+  {{ partial "footer.html" . }}
+  </body>
+</html>

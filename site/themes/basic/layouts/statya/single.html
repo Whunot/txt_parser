@@ -1,0 +1,42 @@
+{{ partial "header.html" . }}
+<body
+  lang="{{ .Site.LanguageCode }}"
+  class="sans-serif w-90 w-80-m w-60-ns center mv2 mv5-ns"
+  itemscopeS
+  itemtype="http://schema.org/Article"
+>
+  <a href="{{ .Site.BaseURL  }}" class="b bb bw1 pb1 no-underline black">{{ .Site.Title }}</a>
+  <span class="b"> / </span>
+  <a href="../../" class="b bb bw1 pb1 no-underline black">{{.Parent.Parent.Title}}</a>
+  <span class="b"> / </span>
+  <a href="../" class="b bb bw1 pb1 no-underline black">{{.Parent.Title}}</a>
+
+  <section id="main" class="mt5">
+    <h1 itemprop="name" id="title">{{ .Title }}</h1>
+    <!-- <span class="f6 gray">{{ .Date.Format "January 2, 2006" }}</span> -->
+
+      <article itemprop="articleBody" id="content" class="w-90 lh-copy">
+        {{ .Content }}
+        
+        {{with ((where .Site.Pages "Params.type" "statya").ByParam "number").Next . }}
+          <a href="{{.Permalink}}">{{.Params.title1}}</a>        
+        {{end}}
+
+        <span class="b"> / {{.Params.title1}} / </span>
+          
+        {{with ((where .Site.Pages "Params.type" "statya").ByParam "number").Prev .}}
+          <a href="{{.Permalink}}">{{.Params.title1}}</a>        
+        {{ end }}
+      </article>
+
+      <!-- last modified note -->
+      <span class="f6 gray mv3" title="Lastmod: {{ .Lastmod.Format "January 2, 2006" }}. Published at: {{ .PublishDate.Format "2006-01-02" }}.">
+        {{ if ne .Lastmod .PublishDate }}
+          <span class="i">last modified</span> {{ dateFormat "January 2, 2006" .Lastmod }}
+        {{ end }}
+      </span>
+  </section>
+
+  {{ partial "footer.html" . }}
+  </body>
+</html>
